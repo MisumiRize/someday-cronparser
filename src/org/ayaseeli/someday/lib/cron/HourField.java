@@ -3,24 +3,23 @@ package org.ayaseeli.someday.lib.cron;
 import java.util.Calendar;
 import java.util.SortedSet;
 
-class MinuteField extends Field {
+class HourField extends Field {
     
-    MinuteField(Operator operator) {
+    HourField(Operator operator) {
         super(operator);
     }
     
     SortedSet<Integer> getCandidates() {
-        return getCandidates(new Range(0, 59).toSortedSet());
+        return getCandidates(new Range(0, 23).toSortedSet());
     }
     
     Calendar postpone(Calendar now) {
         Calendar next = (Calendar) now.clone();
-        next.set(Calendar.SECOND, 0);
-        next.set(Calendar.MILLISECOND, 0);
+        next.set(Calendar.MINUTE, 0);
         SortedSet<Integer> candidates = getCandidates();
         do {
-            next.add(Calendar.MINUTE, 1);
-        } while (!candidates.contains(next.get(Calendar.MINUTE)));
+            next.add(Calendar.HOUR_OF_DAY, 1);
+        } while (!candidates.contains(next.get(Calendar.HOUR_OF_DAY)));
         return next;
     }
     

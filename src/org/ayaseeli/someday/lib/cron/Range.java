@@ -1,5 +1,8 @@
 package org.ayaseeli.someday.lib.cron;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 class Range {
     
     private int from;
@@ -10,16 +13,12 @@ class Range {
         this.to = to;
     }
     
-    public boolean contains(int search) {
-        return search >= from && search <= to;
-    }
-    
-    public int getFrom() {
-        return from;
-    }
-    
-    public int getTo() {
-        return to;
+    SortedSet<Integer> toSortedSet() {
+        SortedSet<Integer> range = new TreeSet<Integer>();
+        for (int i = from; i <= to; i++) {
+            range.add(i);
+        }
+        return range;
     }
 
 }

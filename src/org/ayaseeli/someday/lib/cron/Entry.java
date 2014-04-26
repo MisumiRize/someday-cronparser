@@ -5,14 +5,11 @@ import java.util.Calendar;
 class Entry {
     
     private MinuteField minuteField;
+    private HourField hourField;
     
-    Entry(Operator minute) {
+    Entry(Operator minute, Operator hour) {
         minuteField = new MinuteField(minute);
-    }
-    
-    public Refrain refrain(Calendar now) {
-        Calendar postponed = minuteField.postpone(now);
-        return new Refrain(postponed, minuteField.getIntervalInSeconds());
+        hourField = new HourField(hour);
     }
     
 }

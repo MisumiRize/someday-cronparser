@@ -3,25 +3,24 @@ package org.ayaseeli.someday.lib.cron;
 import java.util.Calendar;
 import java.util.SortedSet;
 
-class MinuteField extends Field {
-    
-    MinuteField(Operator operator) {
+class MonthField extends Field {
+
+    MonthField(Operator operator) {
         super(operator);
     }
     
     SortedSet<Integer> getCandidates() {
-        return getCandidates(new Range(0, 59).toSortedSet());
+        return operator.getCandidates(new Range(1, 12).toSortedSet());
     }
     
     Calendar postpone(Calendar now) {
         Calendar next = (Calendar) now.clone();
-        next.set(Calendar.SECOND, 0);
-        next.set(Calendar.MILLISECOND, 0);
+        next.set(Calendar.DATE, 1);
         SortedSet<Integer> candidates = getCandidates();
         do {
-            next.add(Calendar.MINUTE, 1);
-        } while (!candidates.contains(next.get(Calendar.MINUTE)));
+            next.add(Calendar.MONTH, 1);
+        } while (!candidates.contains(next.get(Calendar.MONTH) + 1));
         return next;
     }
-    
+
 }
