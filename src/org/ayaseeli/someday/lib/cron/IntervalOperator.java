@@ -4,14 +4,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 class IntervalOperator extends Operator {
-    
+
     private int startAt;
-    
+
     IntervalOperator(String operator, int startAt) {
         super(operator);
         this.startAt = startAt;
     }
-    
+
     int getInterval() {
         if (!hasDivisor()) {
             return 1;
@@ -26,24 +26,19 @@ class IntervalOperator extends Operator {
         }
         return parsed;
     }
-    
+
     @Override
     SortedSet<Integer> getCandidates(SortedSet<Integer> mother) {
-        int first = mother.first();
-        int last = mother.last();
-        int interval = getInterval();
-        int startAt = this.startAt;
         SortedSet<Integer> candidates = new TreeSet<Integer>();
-        while (startAt - interval > first) {
-            startAt -= interval;
-        } 
-        while (startAt <= last) {
-            candidates.add(startAt);
-            startAt += interval;
+        int interval = getInterval();
+        for (int candidate : mother) {
+            if ((candidate - startAt) % interval == 0) {
+                candidates.add(candidate);
+            }
         }
         return candidates;
     }
-    
+
     private boolean hasDivisor() {
         return operator.contains("/");
     }
