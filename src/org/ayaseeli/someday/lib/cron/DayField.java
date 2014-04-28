@@ -22,5 +22,9 @@ class DayField extends Field {
         } while (!candidates.contains(next.get(Calendar.DATE)));
         return next;
     }
+    
+    boolean isSatisfiedWith(Calendar next) {
+        return getCandidates().contains(next.get(Calendar.DATE));
+    }
 
 }

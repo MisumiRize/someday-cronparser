@@ -24,4 +24,8 @@ class MinuteField extends Field {
         return next;
     }
     
+    boolean isSatisfiedWith(Calendar next) {
+        return getCandidates().contains(next.get(Calendar.MINUTE));
+    }
+    
 }
