@@ -3,14 +3,14 @@ package org.ayaseeli.someday.lib.cron;
 import java.util.Calendar;
 
 class Entry {
-    
+
     private Calendar now;
     private MinuteField minuteField;
     private HourField hourField;
     private DayField dayField;
     private MonthField monthField;
     private WeekField weekField;
-    
+
     Entry(Calendar now, Operator minute, Operator hour, Operator day, Operator month, Operator week) {
         this.now = now;
         minuteField = new MinuteField(minute);
@@ -19,7 +19,7 @@ class Entry {
         monthField = new MonthField(month);
         weekField = new WeekField(week);
     }
-    
+
     Calendar next() {
         now.add(Calendar.MINUTE, 1);
         now.set(Calendar.SECOND, 0);
@@ -48,5 +48,5 @@ class Entry {
             return now;
         }
     }
-    
+
 }

@@ -7,9 +7,16 @@ class IntervalOperator extends Operator {
 
     private int startAt;
 
-    IntervalOperator(String operator, int startAt) {
+    private IntervalOperator(String operator, int startAt) {
         super(operator);
         this.startAt = startAt;
+    }
+
+    static IntervalOperator parse(String operator, int startAt) {
+        if (!operator.matches("^\\*(\\/[0-9]+)?$")) {
+            throw new IllegalEntryException();
+        }
+        return new IntervalOperator(operator, startAt);
     }
 
     int getInterval() {

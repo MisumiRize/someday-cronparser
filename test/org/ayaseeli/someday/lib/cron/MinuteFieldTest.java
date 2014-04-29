@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MinuteFieldTest {
-    
+
     private Calendar now;
-    
+
     @Before
     public void setUp() throws Exception {
         now = Calendar.getInstance();
@@ -21,14 +21,14 @@ public class MinuteFieldTest {
 
     @Test
     public void testPostpone_whenEveryOperator() {
-        MinuteField field = new MinuteField(new IntervalOperator("*", now.get(Calendar.MINUTE)));
+        MinuteField field = new MinuteField(IntervalOperator.parse("*", now.get(Calendar.MINUTE)));
         Calendar postponed = field.postpone(now);
         assertNotEquals(postponed, now);
         assertEquals(postponed.get(Calendar.MINUTE), 25);
         assertEquals(postponed.get(Calendar.SECOND), 0);
         assertEquals(postponed.get(Calendar.MILLISECOND), 0);
     }
-    
+
     @Test
     public void testPostpone_increasesHour_whenMultipleOperatorNotContains() {
         MinuteField field = new MinuteField(new Operator("10,15"));
@@ -36,16 +36,16 @@ public class MinuteFieldTest {
         assertEquals(postponed.get(Calendar.HOUR), 11);
         assertEquals(postponed.get(Calendar.MINUTE), 10);
     }
-    
+
     @Test(expected = IllegalEntryException.class)
     public void testPostpone_whenRangeOperatorContainsInvalidMinute() {
         MinuteField field = new MinuteField(new Operator("80,100"));
         field.postpone(now);
     }
-    
+
     @Test
     public void testPostpone_whenIntervalOperator() {
-        MinuteField field = new MinuteField(new IntervalOperator("*/3", now.get(Calendar.MINUTE)));
+        MinuteField field = new MinuteField(IntervalOperator.parse("*/3", now.get(Calendar.MINUTE)));
         Calendar postponed = field.postpone(now);
         assertEquals(postponed.get(Calendar.HOUR), 10);
         assertEquals(postponed.get(Calendar.MINUTE), 27);

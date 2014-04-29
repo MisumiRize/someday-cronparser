@@ -10,7 +10,7 @@ import org.junit.Test;
 public class HourFieldTest {
 
     private Calendar now;
-    
+
     @Before
     public void setUp() throws Exception {
         now = Calendar.getInstance();
@@ -19,14 +19,14 @@ public class HourFieldTest {
 
     @Test
     public void testPostpone_whenIntervalOperator() {
-        HourField field = new HourField(new IntervalOperator("*/3", now.get(Calendar.HOUR)));
+        HourField field = new HourField(IntervalOperator.parse("*/3", now.get(Calendar.HOUR)));
         Calendar postponed = field.postpone(now);
         assertEquals(postponed.get(Calendar.HOUR_OF_DAY), 13);
         assertEquals(postponed.get(Calendar.MINUTE), 0);
         Calendar postponedAgain = field.postpone(postponed);
         assertEquals(postponedAgain.get(Calendar.HOUR_OF_DAY), 16);
     }
-    
+
     @Test
     public void testPostpone_increasesDay_whenMultipleOperatorNotContains() {
         HourField field = new HourField(new Operator("0"));
@@ -34,5 +34,5 @@ public class HourFieldTest {
         assertEquals(postponed.get(Calendar.DATE), 27);
         assertEquals(postponed.get(Calendar.HOUR_OF_DAY), 0);
     }
-    
+
 }

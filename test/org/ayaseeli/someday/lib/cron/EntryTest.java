@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EntryTest {
-    
+
     private Calendar now;
     private Operator every;
 
@@ -16,7 +16,7 @@ public class EntryTest {
     public void setUp() throws Exception {
         now = Calendar.getInstance();
         now.set(2014, 4, 26, 10, 24, 15);
-        every = new IntervalOperator("*", 1);
+        every = IntervalOperator.parse("*", 1);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class EntryTest {
         Calendar next = entry.next();
         assertEquals(next.get(Calendar.MINUTE), 25);
     }
-    
+
     @Test
     public void testNext_willCarryHour() {
         Operator operator = new Operator("15");
